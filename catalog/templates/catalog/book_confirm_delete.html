@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Delete Book: {{ object.title }}</h1>
+
+{% if object.bookinstance_set.all %}
+
+<p>You can't delete this book until all its associated BookInstance records have been deleted:</p>
+<ul>
+  {% for instance in object.bookinstance_set.all %}
+    <li>{{ instance }}</li>
+  {% endfor %}
+</ul>
+
+{% else %}
+<p>Are you sure you want to delete the book?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Yes, delete.">
+</form>
+{% endif %}
+
+{% endblock %}
